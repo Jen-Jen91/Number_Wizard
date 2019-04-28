@@ -2,31 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NumberWizard : MonoBehaviour
-{
+public class NumberWizard : MonoBehaviour {
+
+    int maxGuess;
+    int minGuess;
+    int guess;
+
     // Start is called before the first frame update
     void Start() {
-        int maxGuess = 1000;
-        int minGuess = 1;
+        StartGame();
+    }
 
-        Debug.Log("Welcome to Number Wizard!");
+    // All statements for the start of the game
+    void StartGame() {
+        maxGuess = 1000;
+        minGuess = 1;
+        guess = 500;
+
+        Debug.Log("WELCOME TO NUMBER WIZARD!");
         Debug.Log("Pick a number...");
         Debug.Log("The highest number you can choose is: " + maxGuess);
         Debug.Log("The lowest number you can choose is: " + minGuess);
-        Debug.Log("Is your number higher or lower than my guess?");
-        Debug.Log("Press Up = Higher, Press Down = Lower, Press Enter = Correct!");
+        Debug.Log("Is your number " + guess + "?");
+        Debug.Log("Press UP = Higher, Press DOWN = Lower, Press ENTER = Correct!");
+
+        // Allow console to guess 1000:
+        maxGuess = maxGuess + 1;
     }
 
     // Update is called once per frame
     void Update() {
-        
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            Debug.Log("Up Arrow key was pressed");
+            Debug.Log("Darn, your number is higher!");
+            minGuess = guess;
+            NextGuess();
         } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            Debug.Log("Down Arrow key was pressed");
+            Debug.Log("Darn, your number is lower!");
+            maxGuess = guess;
+            NextGuess();
         } else if (Input.GetKeyDown(KeyCode.Return)) {
-            Debug.Log("Yay! I guessed your number!");
+            Debug.Log("Yay! I guessed your number! :D");
+            StartGame();
         } 
+    }
 
+    // Create a new guess, using the new max/min
+    void NextGuess() {
+        guess = (maxGuess + minGuess) / 2;
+        Debug.Log("Is your number " + guess + "?");
     }
 }
